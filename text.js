@@ -76,7 +76,7 @@ function main() {
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
-        bevelSize: .3,
+        bevelSize: 0,
         bevelSegments: 5,
       });
 
