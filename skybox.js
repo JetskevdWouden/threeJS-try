@@ -38,7 +38,7 @@ function main() {
     scene.add(light);
   }
 
-  const domEvents = new THREEx.DomEvents(camera, renderer.domElement);
+  const domEvents = new THREEx.DomEvents(camera, canvas);
 
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('./images/img_ft.jpg');
