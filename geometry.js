@@ -249,7 +249,7 @@ function main() {
       const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
         size: 13.0,
-        height: .2,
+        height: 5.2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
