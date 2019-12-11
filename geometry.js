@@ -252,7 +252,7 @@ function main() {
         height: 5.2,
         curveSegments: 12,
         bevelEnabled: true,
-        bevelThickness: 0.15,
+        bevelThickness: 3.15,
         bevelSize: .3,
         bevelSegments: 5,
       });
