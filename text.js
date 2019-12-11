@@ -69,10 +69,10 @@ function main() {
 
     async function doit() {
       const font = await loadFont('./Fonts/GT Super WT Super_Regular.json');   
-      const geometry = new THREE.TextBufferGeometry('three.js', {
+      const geometry = new THREE.TextBufferGeometry('WeTransfer', {
         font: font,
-        size: 3.0,
-        height: .2,
+        size: 2.0,
+        height: 1.2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
@@ -80,7 +80,7 @@ function main() {
         bevelSegments: 5,
       });
 
-      addSolidGeometry(-.5, 0, geometry);
+      // addSolidGeometry(-.5, 0, geometry);
 
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
@@ -89,7 +89,7 @@ function main() {
       const parent = new THREE.Object3D();
       parent.add(mesh);
 
-      addObject(.5, 0, parent);
+      addObject(0, 0, parent);
     }
     doit();
   }
