@@ -5,10 +5,10 @@ function main() {
   const canvas = document.querySelector("#c");
   const renderer = new THREE.WebGLRenderer({ canvas });
 
-  const fov = 55;
+  const fov = 85;
   const aspect = window.innerWidth / window.innerHeight; // the canvas default
-  const near = 30;
-  const far = 30000;
+  const near = 10;
+  const far = 50000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   // camera.position.z = 40;
   camera.position.set(-3000, 0, 0);
@@ -105,7 +105,7 @@ function main() {
       const font = await loadFont("./Fonts/GT Super WT Super_Regular.json");
       const geometry = new THREE.TextBufferGeometry("WeTransfer", {
         font: font,
-        size: 2.0,
+        size: 20.0,
         height: 1.2,
         curveSegments: 12,
         bevelEnabled: true,
@@ -150,12 +150,12 @@ function main() {
       camera.updateProjectionMatrix();
     }
 
-    // objects.forEach((obj, ndx) => {
-    //   const speed = .5 + ndx * .05;
-    //   const rot = time * speed;
-    //   obj.rotation.x = rot;
-    //   obj.rotation.y = rot;
-    // });
+    objects.forEach((obj, ndx) => {
+      const speed = .5 + ndx * .05;
+      const rot = time * speed;
+      obj.rotation.x = rot;
+      obj.rotation.y = rot;
+    });
 
     renderer.render(scene, camera);
 
