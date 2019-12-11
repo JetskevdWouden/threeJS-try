@@ -55,7 +55,7 @@ function main() {
 
   for (let i = 0; i < 6; i++) {
       materialArray[i].side = THREE.BackSide;
-  
+  }
 
   const objects = [];
   const spread = 15;
