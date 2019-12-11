@@ -252,9 +252,9 @@ function main() {
         height: 5.2,
         curveSegments: 12,
         bevelEnabled: true,
-        bevelThickness: 13.15,
+        bevelThickness: 3.15,
         bevelSize: 1.3,
-        bevelSegments: 5,
+        bevelSegments: 15,
       });
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
