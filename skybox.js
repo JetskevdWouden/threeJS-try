@@ -105,8 +105,8 @@ function main() {
       const font = await loadFont("./Fonts/GT Super WT Super_Regular.json");
       const geometry = new THREE.TextBufferGeometry("WeTransfer", {
         font: font,
-        size: 20.0,
-        height: 1.2,
+        size: 200.0,
+        height: 10.2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.9,
