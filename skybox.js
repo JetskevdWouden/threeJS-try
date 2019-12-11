@@ -38,8 +38,6 @@ function main() {
     scene.add(light);
   }
 
-  const domEvents = new THREEx.DomEvents(camera, canvas);
-
   let materialArray = [];
   let texture_ft = new THREE.TextureLoader().load('./images/img_ft.jpg');
   let texture_bk = new THREE.TextureLoader().load('./images/img_bk.jpg');
@@ -142,12 +140,6 @@ function main() {
     }
     return needResize;
   }
-
-  domEvents.addEventListener(objects[0], 'mouseover', event => {
-    objects[0].scale.x += 5;
-    objects[0].scale.y += 5;
-    objects[0].scale.z += 5;
-})
 
   function render(time) {
     time *= 0.001;
