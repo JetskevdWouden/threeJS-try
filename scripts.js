@@ -18,7 +18,7 @@ function main() {
   controls.update();
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("black");
+  scene.background = new THREE.Color("#DEFEFF");
 
   {
     const planeSize = 40;
