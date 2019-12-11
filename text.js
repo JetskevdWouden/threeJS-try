@@ -47,7 +47,7 @@ scene.background = new THREE.Color("#DEFEFF");
       const font = await loadFont('./Fonts/GT Super WT Super_Regular.json');  
       const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
-        size: 3.0,
+        size: 13.0,
         height: 2.2,
         curveSegments: 22,
         bevelEnabled: true,
@@ -103,8 +103,8 @@ scene.background = new THREE.Color("#DEFEFF");
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
     
-    // parent.rotation.x += 0.001;
-    // parent.rotation.y += 0.001;
+    mesh.rotation.x += 0.001;
+    mesh.rotation.y += 0.001;
 
 
     renderer.render(scene, camera);
