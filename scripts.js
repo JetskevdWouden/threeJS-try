@@ -46,8 +46,8 @@ function main() {
   //const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 }); // greenish blue
   const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 }); // greenish blue
 
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  //const cube = new THREE.Mesh(geometry, material);
+  //scene.add(cube);
 
   renderer.render(scene, camera);
 
