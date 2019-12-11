@@ -249,12 +249,12 @@ function main() {
       const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
         size: 3.0,
-        height: .2,
+        height: 1.2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
         bevelSize: .3,
-        bevelSegments: 15,
+        bevelSegments: 5,
       });
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
