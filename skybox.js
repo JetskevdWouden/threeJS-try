@@ -14,9 +14,9 @@ function main() {
   camera.position.set(-3000, 0, 0);
 
   const controls = new OrbitControls(camera, canvas);
-  //   controls.target.set(0, 5, 0);
-  //   controls.update();
-  controls.addEventListener("change", renderer);
+    controls.target.set(0, 5, 0);
+    controls.update();
+//   controls.addEventListener("change", renderer);
 //   controls.minDistance = 300;
 //   controls.maxDistance = 3500;
 
@@ -58,7 +58,7 @@ function main() {
   }
 
   const objects = [];
-  const spread = 15;
+  const spread = 1;
 
   function addObject(x, y, obj) {
     obj.position.x = x * spread;
@@ -125,7 +125,7 @@ function main() {
       const parent = new THREE.Object3D();
       parent.add(mesh);
 
-      addObject(2000, 3000, parent);
+      addObject(200, 300, parent);
     }
     doit();
   }
