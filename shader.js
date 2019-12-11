@@ -100,49 +100,34 @@ function main() {
     const fragmentShader = `
     #include <common>
   
-    //Calculate the squared length of a vector
-    float length2(vec2 p){
-        return dot(p,p);
-    }
-    
-    //Generate some noise to scatter points.
-    float noise(vec2 p){
-        return fract(sin(fract(sin(p.x) * (43.13311)) + p.y) * 31.0011);
-    }
-    
-    float worley(vec2 p) {
-        //Set our distance to infinity
-        float d = 1e30;
-        //For the 9 surrounding grid points
-        for (int xo = -1; xo <= 1; ++xo) {
-            for (int yo = -1; yo <= 1; ++yo) {
-                //Floor our vec2 and add an offset to create our point
-                vec2 tp = floor(p) + vec2(xo, yo);
-                //Calculate the minimum distance for this grid point
-                //Mix in the noise value too!
-                d = min(d, length2(p - tp - noise(tp)));
-            }
-        }
-        return 3.0*exp(-4.0*abs(2.5*d - 1.0));
-    }
-    
-    float fworley(vec2 p) {
-        //Stack noise layers 
-        return sqrt(sqrt(sqrt(
-            worley(p*5.0 + 0.05*iTime) *
-            sqrt(worley(p * 50.0 + 0.12 + -0.1*iTime)) *
-            sqrt(sqrt(worley(p * -10.0 + 0.03*iTime))))));
-    }
-          
+    uniform vec3 iResolution;
+    uniform float iTime;
+    uniform sampler2D iChannel0;
+  
+    // By Daedelus: https://www.shadertoy.com/user/Daedelus
+    // license: Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+    #define TIMESCALE 0.25 
+    #define TILES 8
+    #define COLOR 0.7, 1.6, 2.8
+  
     void mainImage( out vec4 fragColor, in vec2 fragCoord )
     {
-        vec2 uv = fragCoord.xy / iResolution.xy;
-        //Calculate an intensity
-        float t = fworley(uv * iResolution.xy / 1500.0);
-        //Add some gradient
-        t*=exp(-length2(abs(0.7*uv - 1.0)));	
-        //Make it blue!
-        fragColor = vec4(t * vec3(0.1, 1.1*t, pow(t, 0.5-t)), 1.0);
+      vec2 uv = fragCoord.xy / iResolution.xy;
+      uv.x *= iResolution.x / iResolution.y;
+      
+      vec4 noise = texture2D(iChannel0, floor(uv * float(TILES)) / float(TILES));
+      float p = 1.0 - mod(noise.r + noise.g + noise.b + iTime * float(TIMESCALE), 1.0);
+      p = min(max(p * 3.0 - 1.8, 0.1), 2.0);
+      
+      vec2 r = mod(uv * float(TILES), 1.0);
+      r = vec2(pow(r.x - 0.5, 2.0), pow(r.y - 0.5, 2.0));
+      p *= 1.0 - pow(min(1.0, 12.0 * dot(r, r)), 2.0);
+      
+      fragColor = vec4(COLOR, 1.0) * p;
+    }
+  
+    void main() {
+      mainImage(gl_FragColor, gl_FragCoord.xy);
     }
     `;
     const loader = new THREE.TextureLoader();
