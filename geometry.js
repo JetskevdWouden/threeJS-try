@@ -248,8 +248,8 @@ function main() {
       const font = await loadFont('https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json');  
       const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
-        size: 3.0,
-        height: 1.2,
+        size: 13.0,
+        height: .2,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.15,
