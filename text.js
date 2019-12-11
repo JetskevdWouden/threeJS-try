@@ -116,12 +116,12 @@ function main() {
       camera.updateProjectionMatrix();
     }
 
-    objects.forEach((obj, ndx) => {
-      const speed = .5 + ndx * .05;
-      const rot = time * speed;
-      obj.rotation.x = rot;
-      obj.rotation.y = rot;
-    });
+    // objects.forEach((obj, ndx) => {
+    //   const speed = .5 + ndx * .05;
+    //   const rot = time * speed;
+    //   obj.rotation.x = rot;
+    //   obj.rotation.y = rot;
+    // });
 
     renderer.render(scene, camera);
 
