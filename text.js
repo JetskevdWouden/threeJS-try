@@ -1,41 +1,98 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
-import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
-
 
 function main() {
-  const canvas = document.querySelector("#c");
-  const renderer = new THREE.WebGLRenderer({ canvas });
+  const canvas = document.querySelector('#c');
+  const renderer = new THREE.WebGLRenderer({canvas});
 
-  const fov = 75;
-  const aspect = 2; // the canvas default
+  const fov = 40;
+  const aspect = 2;  // the canvas default
   const near = 0.1;
-  const far = 100;
+  const far = 1000;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 20);
-
-  const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 5, 0);
-  controls.update();
+  camera.position.z = 40;
 
   const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xAAAAAA);
 
   {
-    const color = 0xffffff;
+    const color = 0xFFFFFF;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(-1, 2, 4);
     scene.add(light);
   }
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(1, -2, -4);
+    scene.add(light);
+  }
 
-  const boxWidth = 1;
-  const boxHeight = 1;
-  const boxDepth = 1;
-  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
+  const objects = [];
+  const spread = 15;
 
-  const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 }); // greenish blue
+  function addObject(x, y, obj) {
+    obj.position.x = x * spread;
+    obj.position.y = y * spread;
 
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+    scene.add(obj);
+    objects.push(obj);
+  }
+
+  function createMaterial() {
+    const material = new THREE.MeshPhongMaterial({
+      side: THREE.DoubleSide,
+    });
+
+    const hue = Math.random();
+    const saturation = 1;
+    const luminance = .5;
+    material.color.setHSL(hue, saturation, luminance);
+
+    return material;
+  }
+
+  function addSolidGeometry(x, y, geometry) {
+    const mesh = new THREE.Mesh(geometry, createMaterial());
+    addObject(x, y, mesh);
+  }
+
+  {
+    const loader = new THREE.FontLoader();
+    // promisify font loading
+    function loadFont(url) {
+      return new Promise((resolve, reject) => {
+        loader.load(url, resolve, undefined, reject);
+      });
+    }
+
+    async function doit() {
+      const font = await loadFont('./Fonts/GT Super WT Super_Regular.json');   
+      const geometry = new THREE.TextBufferGeometry('three.js', {
+        font: font,
+        size: 3.0,
+        height: .2,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.15,
+        bevelSize: .3,
+        bevelSegments: 5,
+      });
+
+      addSolidGeometry(-.5, 0, geometry);
+
+      const mesh = new THREE.Mesh(geometry, createMaterial());
+      geometry.computeBoundingBox();
+      geometry.boundingBox.getCenter(mesh.position).multiplyScalar(-1);
+
+      const parent = new THREE.Object3D();
+      parent.add(mesh);
+
+      addObject(.5, 0, parent);
+    }
+    doit();
+  }
 
   function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
@@ -49,7 +106,7 @@ function main() {
   }
 
   function render(time) {
-    time *= 0.001; // convert time to seconds
+    time *= 0.001;
 
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
@@ -57,17 +114,18 @@ function main() {
       camera.updateProjectionMatrix();
     }
 
-    const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
-
-    cube.rotation.x = time;
-    cube.rotation.y = time;
+    objects.forEach((obj, ndx) => {
+      const speed = .5 + ndx * .05;
+      const rot = time * speed;
+      obj.rotation.x = rot;
+      obj.rotation.y = rot;
+    });
 
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
   }
+
   requestAnimationFrame(render);
 }
 
