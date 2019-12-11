@@ -80,8 +80,10 @@ function main() {
         bevelSegments: 5,
       });
 
+      // axis on bottom left
       // addSolidGeometry(-.5, 0, geometry);
 
+      //axis set to center -> boxing
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
       geometry.boundingBox.getCenter(mesh.position).multiplyScalar(-1);
