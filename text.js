@@ -44,7 +44,7 @@ scene.background = new THREE.Color("#DEFEFF");
     }
 
     // async function doit() {
-      const font = await loadFont('./Fonts/GT Super WT Super_Regular.json');  
+      const font = loadFont('./Fonts/GT Super WT Super_Regular.json');  
       const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
         size: 13.0,
