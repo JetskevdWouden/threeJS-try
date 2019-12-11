@@ -17,8 +17,8 @@ function main() {
   //   controls.target.set(0, 5, 0);
   //   controls.update();
   controls.addEventListener("change", renderer);
-  controls.minDistance = 300;
-  controls.maxDistance = 3500;
+//   controls.minDistance = 300;
+//   controls.maxDistance = 3500;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xaaaaaa);
