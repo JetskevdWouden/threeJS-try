@@ -246,7 +246,7 @@ function main() {
 
     async function doit() {
       const font = await loadFont('https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json');  
-      const geometry = new THREE.TextBufferGeometry('Hello There', {
+      const geometry = new THREE.TextBufferGeometry('Hello', {
         font: font,
         size: 3.0,
         height: .2,
@@ -254,7 +254,7 @@ function main() {
         bevelEnabled: true,
         bevelThickness: 0.15,
         bevelSize: .3,
-        bevelSegments: 5,
+        bevelSegments: 15,
       });
       const mesh = new THREE.Mesh(geometry, createMaterial());
       geometry.computeBoundingBox();
