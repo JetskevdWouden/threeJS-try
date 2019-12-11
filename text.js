@@ -75,9 +75,9 @@ function main() {
         height: 1.2,
         curveSegments: 12,
         bevelEnabled: true,
-        bevelThickness: 0.15,
-        bevelSize: 0,
-        bevelSegments: 5,
+        bevelThickness: 0.9,
+        bevelSize: 0.1,
+        bevelSegments: 15,
       });
 
       // axis on bottom left
