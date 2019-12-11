@@ -1,119 +1,63 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
-import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
-import { GLTFLoader } from "./node_modules/three/examples/jsm/loaders/GLTFLoader.js";
 
 function main() {
   const canvas = document.querySelector("#c");
-  const renderer = new THREE.WebGLRenderer({ canvas });
+//const renderer = new THREE.WebGLRenderer({ canvas });
+//need to tell the WebGLRenderer to use alpha so places we are not drawing anything are transparent
+const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+  });
 
-  const fov = 45;
+  const fov = 75;
   const aspect = 2; // the canvas default
   const near = 0.1;
-  const far = 100;
+  const far = 5;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.set(0, 10, 20);
-
-  const controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 5, 0);
-  controls.update();
+  camera.position.z = 2;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color("#DEFEFF");
-
-  {
-    const planeSize = 40;
-
-    const loader = new THREE.TextureLoader();
-    const texture = loader.load(
-      "https://threejsfundamentals.org/threejs/resources/images/checker.png"
-    );
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.magFilter = THREE.NearestFilter;
-    const repeats = planeSize / 2;
-    texture.repeat.set(repeats, repeats);
-
-    const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-    const planeMat = new THREE.MeshPhongMaterial({
-      map: texture,
-      side: THREE.DoubleSide
-    });
-    const mesh = new THREE.Mesh(planeGeo, planeMat);
-    mesh.rotation.x = Math.PI * -0.5;
-    scene.add(mesh);
-  }
-
-  {
-    const skyColor = 0xb1e1ff; // light blue
-    const groundColor = 0xb97a20; // brownish orange
-    const intensity = 1;
-    const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-    scene.add(light);
-  }
 
   {
     const color = 0xffffff;
     const intensity = 1;
     const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(5, 10, 2);
+    light.position.set(-1, 2, 4);
     scene.add(light);
-    scene.add(light.target);
   }
 
-  function frameArea(sizeToFitOnScreen, boxSize, boxCenter, camera) {
-    const halfSizeToFitOnScreen = sizeToFitOnScreen * 0.5;
-    const halfFovY = THREE.Math.degToRad(camera.fov * 0.5);
-    const distance = halfSizeToFitOnScreen / Math.tan(halfFovY);
-    // compute a unit vector that points in the direction the camera is now
-    // in the xz plane from the center of the box
-    const direction = new THREE.Vector3()
-      .subVectors(camera.position, boxCenter)
-      .multiply(new THREE.Vector3(1, 0, 1))
-      .normalize();
+  const boxWidth = 1;
+  const boxHeight = 1;
+  const boxDepth = 1;
+  const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-    // move the camera to a position distance units way from the center
-    // in whatever direction the camera was from the center already
-    camera.position.copy(direction.multiplyScalar(distance).add(boxCenter));
+  function makeInstance(geometry, color, x) {
+    const material = new THREE.MeshPhongMaterial({ color });
 
-    // pick some near and far values for the frustum that
-    // will contain the box.
-    camera.near = boxSize / 100;
-    camera.far = boxSize * 100;
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
-    camera.updateProjectionMatrix();
+    cube.position.x = x;
 
-    // point the camera to look at the center of the box
-    camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
+    return cube;
   }
 
-  {
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load(
-    //   "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf"
-      "./Objects/scene.gltf"
-      ,
-      gltf => {
-        const root = gltf.scene;
-        scene.add(root);
+  const cubes = [
+    makeInstance(geometry, 0x44aa88, 0),
+    makeInstance(geometry, 0x8844aa, -2),
+    makeInstance(geometry, 0xaa8844, 2)
+  ];
 
-        // compute the box that contains all the stuff
-        // from root and below
-        const box = new THREE.Box3().setFromObject(root);
+  //const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 }); // greenish blue
+  //const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 }); // greenish blue
 
-        const boxSize = box.getSize(new THREE.Vector3()).length();
-        const boxCenter = box.getCenter(new THREE.Vector3());
+  //const cube = new THREE.Mesh(geometry, material);
+  //scene.add(cube);
 
-        // set the camera to frame the box
-        frameArea(boxSize * 0.5, boxSize, boxCenter, camera);
+  //renderer.render(scene, camera);
 
-        // update the Trackball controls to handle the new size
-        controls.maxDistance = boxSize * 10;
-        controls.target.copy(boxCenter);
-        controls.update();
-      }
-    );
-  }
-
+  //fix "blockiness"
+  //function - checks if the renderer's canvas is not already the size it is being displayed as and if so set its size
   function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
     const width = canvas.clientWidth;
@@ -125,18 +69,32 @@ function main() {
     return needResize;
   }
 
-  function render() {
+  function render(time) {
+    time *= 0.001; // convert time to seconds
+
+    //setSize
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
 
+    //responsiveness
+    const canvas = renderer.domElement;
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
+
+    cubes.forEach((cube, ndx) => {
+      const speed = 1 + ndx * 0.1;
+      const rot = time * speed;
+      cube.rotation.x = rot;
+      cube.rotation.y = rot;
+    });
+
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
   }
-
   requestAnimationFrame(render);
 }
 
