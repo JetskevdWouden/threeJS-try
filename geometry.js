@@ -252,8 +252,8 @@ function main() {
         height: 5.2,
         curveSegments: 12,
         bevelEnabled: true,
-        bevelThickness: 3.15,
-        bevelSize: 3.3,
+        bevelThickness: 13.15,
+        bevelSize: 1.3,
         bevelSegments: 5,
       });
       const mesh = new THREE.Mesh(geometry, createMaterial());
