@@ -1,4 +1,5 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
+import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
 
 function main() {
   const canvas = document.querySelector("#c");
@@ -18,7 +19,12 @@ const far = 100;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.set(0, 10, 90);
 
-  const scene = new THREE.Scene();
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0, 5, 0);
+controls.update();
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#DEFEFF");
 
   {
     const color = 0xffffff;
