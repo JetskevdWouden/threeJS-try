@@ -246,7 +246,7 @@ function main() {
 
     async function doit() {
       const font = await loadFont('https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json');  
-      const geometry = new THREE.TextBufferGeometry('three.js', {
+      const geometry = new THREE.TextBufferGeometry('Hello There', {
         font: font,
         size: 3.0,
         height: .2,
