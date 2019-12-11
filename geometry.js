@@ -250,7 +250,7 @@ function main() {
         font: font,
         size: 13.0,
         height: 5.2,
-        curveSegments: 12,
+        curveSegments: 22,
         bevelEnabled: true,
         bevelThickness: 3.15,
         bevelSize: 1.3,
