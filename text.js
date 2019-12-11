@@ -90,8 +90,8 @@ function main() {
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
     
-    geometry.rotation.x += 0.001;
-    geometry.rotation.y += 0.001;
+    parent.rotation.x += 0.001;
+    parent.rotation.y += 0.001;
 
 
     renderer.render(scene, camera);
