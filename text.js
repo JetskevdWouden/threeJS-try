@@ -34,7 +34,7 @@ scene.background = new THREE.Color("#DEFEFF");
     scene.add(light);
   }
 
-  {
+  
     const loader = new THREE.FontLoader();
     // promisify font loading
     function loadFont(url) {
@@ -60,13 +60,14 @@ scene.background = new THREE.Color("#DEFEFF");
     //   geometry.computeBoundingBox();
     //   geometry.boundingBox.getCenter(mesh.position).multiplyScalar(-1);
 
-      const parent = new THREE.Object3D();
-      parent.add(mesh);
+    //   const parent = new THREE.Object3D();
+    //   parent.add(mesh);
 
-      scene.add(parent)
+    //   scene.add(parent)
+      scene.add(mesh)
     }
     doit();
-  }
+  
 
 
   //const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 }); // greenish blue
