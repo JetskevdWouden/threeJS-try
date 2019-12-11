@@ -141,6 +141,12 @@ function main() {
     return needResize;
   }
 
+  domEvents.addEventListener(objects[0], 'mouseover', event => {
+    objects[0].scale.x += 5;
+    objects[0].scale.y += 5;
+    objects[0].scale.z += 5;
+})
+
   function render(time) {
     time *= 0.001;
 
@@ -150,12 +156,12 @@ function main() {
       camera.updateProjectionMatrix();
     }
 
-    objects.forEach((obj, ndx) => {
-      const speed = .5 + ndx * .05;
-      const rot = time * speed;
-      obj.rotation.x = rot;
-      obj.rotation.y = rot;
-    });
+    // objects.forEach((obj, ndx) => {
+    //   const speed = .5 + ndx * .05;
+    //   const rot = time * speed;
+    //   obj.rotation.x = rot;
+    //   obj.rotation.y = rot;
+    // });
 
     renderer.render(scene, camera);
 
