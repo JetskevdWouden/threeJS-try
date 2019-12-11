@@ -30,7 +30,8 @@ function main() {
         vec2 uv = fragCoord/iResolution.xy;
   
         // Time varying pixel color
-        vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+        // vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx+vec3(0,2,4));
+        vec3 col = 0.5 + 0.5*cos(iTime+uv.xyx*40.0+vec3(0,2,4));
   
         // Output to screen
         fragColor = vec4(col,1.0);
