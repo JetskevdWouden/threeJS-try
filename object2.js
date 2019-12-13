@@ -94,6 +94,7 @@ function main() {
       ,
       gltf => {
         const root = gltf.scene;
+        root.scale = 2;
         root.position.y = 1;
         scene.add(root);
 
