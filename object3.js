@@ -86,6 +86,7 @@ function main() {
     camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
   }
 
+  let carton;
   {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(
@@ -98,6 +99,8 @@ function main() {
         root.scale.y = 10;
         root.scale.z = 10;
         root.position.y = .01;
+        carton = root;
+        console.log("HERE", carton)
         scene.add(root);
 
         // compute the box that contains all the stuff
