@@ -86,6 +86,7 @@ function main() {
     camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
   }
 
+  let root;
   {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(
@@ -93,7 +94,7 @@ function main() {
       "./Objects/carton.gltf"
       ,
       gltf => {
-        const root = gltf.scene;
+        root = gltf.scene;
         root.scale.x = 10;
         root.scale.y = 10;
         root.scale.z = 10;
@@ -135,6 +136,10 @@ function main() {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
+
+    root.rotation.x += 0.01;
+    root.rotation.y =+ 0.01;
+    
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
