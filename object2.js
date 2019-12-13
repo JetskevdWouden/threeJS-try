@@ -94,7 +94,10 @@ function main() {
       ,
       gltf => {
         const root = gltf.scene;
-        root.position.y = 1;
+        root.scale.x = 2;
+        root.scale.y = 2;
+        root.scale.z = 2;
+        root.position.y = .1;
         scene.add(root);
 
         // compute the box that contains all the stuff
