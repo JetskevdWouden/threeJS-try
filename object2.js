@@ -94,7 +94,6 @@ function main() {
       ,
       gltf => {
         const root = gltf.scene;
-        root.scale = 2;
         root.position.y = 1;
         scene.add(root);
 
@@ -133,7 +132,7 @@ function main() {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
+    root.scale = 2;
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
