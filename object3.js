@@ -138,12 +138,12 @@ function main() {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
+    if(carton) {
+      carton.rotation.x += 0.01;
+      carton.rotation.y += 0.01;
+    }
 
-    carton.rotation.x += 0.01;
-    carton.rotation.y += 0.01;
-    
     renderer.render(scene, camera);
-
     requestAnimationFrame(render);
   }
 
