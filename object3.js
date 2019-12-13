@@ -86,7 +86,6 @@ function main() {
     camera.lookAt(boxCenter.x, boxCenter.y, boxCenter.z);
   }
 
-  let root;
   {
     const gltfLoader = new GLTFLoader();
     gltfLoader.load(
@@ -94,11 +93,11 @@ function main() {
       "./Objects/carton.gltf"
       ,
       gltf => {
-        root = gltf.scene;
+        const root = gltf.scene;
         root.scale.x = 10;
         root.scale.y = 10;
         root.scale.z = 10;
-        // root.position.y = .01;
+        root.position.y = .01;
         scene.add(root);
 
         // compute the box that contains all the stuff
@@ -136,10 +135,6 @@ function main() {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
-    root.rotation.x += 0.01;
-    root.rotation.y =+ 0.01;
-    
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
