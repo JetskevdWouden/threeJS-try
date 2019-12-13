@@ -132,7 +132,7 @@ function main() {
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-    root.scale = 2;
+    scene.root.scale = 2;
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
